@@ -25,6 +25,18 @@ repositories {
 	}
 
 	maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
+
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 loom {
@@ -56,8 +68,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "curse.maven:wynntils-303451:5768014"
 
-	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:${version}")
-	
+	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
+	modRuntimeOnly "maven.modrinth:wynntils-url-redirector:YXhz4KRA"
 }
 
 processResources {
