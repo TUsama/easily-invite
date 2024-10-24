@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
+	id "me.modmuss50.mod-publish-plugin" version "0.6.2"
 }
 
 version = project.mod_version
@@ -16,11 +17,26 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	maven {
+		url "https://cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
+
+	maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
 }
 
 loom {
 	splitEnvironmentSourceSets()
 
+	runs {
+		client {
+			property("devauth.configDir", getRootProject().file(".devauth").absolutePath)
+			vmArgs "-ea" // run dev builds with asserts
+			client()
+		}
+	}
 	mods {
 		"easily-invite" {
 			sourceSet sourceSets.main
@@ -38,6 +54,9 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "curse.maven:wynntils-303451:5768014"
+
+	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:${version}")
 	
 }
 
