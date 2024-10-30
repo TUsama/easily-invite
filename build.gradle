@@ -45,7 +45,9 @@ loom {
 	runs {
 		client {
 			property("devauth.configDir", getRootProject().file(".devauth").absolutePath)
-			vmArgs "-ea" // run dev builds with asserts
+			vmArgs "-XX:+AllowEnhancedClassRedefinition"
+			vmArgs "-XX:HotswapAgent=fatjar"
+			vmArgs "-XX:+UseCodeCacheFlushing"
 			client()
 		}
 	}
@@ -66,10 +68,11 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "curse.maven:wynntils-303451:5768014"
+	modImplementation "curse.maven:wynntils-303451:5853922"
 
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")
 	modRuntimeOnly "maven.modrinth:wynntils-url-redirector:YXhz4KRA"
+	modRuntimeOnly "maven.modrinth:caramel-chat:VrxEDJuH"
 }
 
 processResources {
