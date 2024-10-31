@@ -51,7 +51,7 @@ public class ChatDetector {
         StyledText modified = colorizedStyledText(message, pattern, mentionPart);
         event.setMessage(modified);
 
-        Pair<String, String> nameAndContent = MessageUtils.extractMessage(message.getString(PartStyle.StyleType.NONE));
+        Pair<String, String> nameAndContent = MessageUtils.extractMessage(message);
 
         String thisPlayerName = McUtils.playerName();
         String name = nameAndContent.getLeft();
@@ -114,7 +114,7 @@ public class ChatDetector {
         //exclude the /msg situation
         if (styledText1.contains(ArrowInMsg)) return;
         try {
-            Pair<String, String> nameAndContent = MessageUtils.extractMessage(styledText1.getString(PartStyle.StyleType.NONE));
+            Pair<String, String> nameAndContent = MessageUtils.extractMessage(styledText1);
             if (nameAndContent.getRight().equals(McUtils.playerName())) return;
 
             String content = nameAndContent.getRight();
